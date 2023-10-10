@@ -54,18 +54,4 @@ public class VirtualThreadingActions {
             throw new RuntimeException(e);
         }
     }
-
-    //    public VirtualThreadingActions executeActions() {
-//        // Wait for all actions to complete here if needed
-//        for (java.util.concurrent.Callable<ElementActions> action : actionsList) {
-//            // Handle the completion or wait for it as necessary
-//            try {
-//                ElementActions result = action.get();
-//                // Handle the result if needed
-//            } catch (InterruptedException | ExecutionException e) {
-//                // Handle exceptions
-//            }
-//        }
-//        return this;
-//    }
 }
