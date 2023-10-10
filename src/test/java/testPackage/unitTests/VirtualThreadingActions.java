@@ -16,69 +16,10 @@ public class VirtualThreadingActions {
     private final By registerBtn = By.className("ico-register");
 
 
-//    public VirtualThreadingActions actionsThreading(By locator, String value ,String actionToDo){
-//        try (ExecutorService myExecutor = Executors.newVirtualThreadPerTaskExecutor()) {
-//            java.util.concurrent.Future<ElementActions> action = null;
-//            switch (actionToDo.toLowerCase()) {
-//                case "type" -> action = myExecutor.submit(() -> driver.element().type(locator,value));
-//                case "click" -> action = myExecutor.submit(() -> driver.element().click(locator));
-//                case "select" -> action = myExecutor.submit(() -> driver.element().select(locator,value));
-//            }
-//            actionsList.add(action);
-//        }
-//        return this;
-//    }
-
-//    public VirtualThreadingActions click(By locator){
-//        driver.browser().navigateToURL("https://demo.nopcommerce.com/");
-//        driver.element().click(registerBtn);
-//        java.util.concurrent.Callable<ElementActions> action;
-//        try (ExecutorService myExecutor = Executors.newVirtualThreadPerTaskExecutor()) {
-//            action = myExecutor.submit(() ->driver.element().click(locator));
-//            actionsList.add(action);
-//            return this;
-//        }
-//    }
-//
-//    public VirtualThreadingActions type(By locator, String value){
-//        java.util.concurrent.Future<ElementActions> action;
-//        try (ExecutorService myExecutor = Executors.newVirtualThreadPerTaskExecutor()) {
-//            action = myExecutor.submit(() ->driver.element().type(locator, value));
-//            actionsList.add(action);
-//            return this;
-//        }
-//    }
-//
-//    public VirtualThreadingActions select(By locator, String textORValue){
-//        java.util.concurrent.Future<ElementActions> action;
-//        try (ExecutorService myExecutor = Executors.newVirtualThreadPerTaskExecutor()) {
-//            action = myExecutor.submit(() ->driver.element().select(locator, textORValue));
-//            actionsList.add(action);
-//            return this;
-//        }
-//    }
-
-//    public VirtualThreadingActions perform(){
-//        for (java.util.concurrent.Future<ElementActions> action : actionsList) {
-//            try {
-//                action.get();
-//            } catch (InterruptedException | ExecutionException e) {
-//                throw new RuntimeException(e);
-//            }
-//        }
-//        return this;
-//    }
-
-//    private void addActionBuilderOne(Callable<ElementActions> action) {
-//        try (ExecutorService myExecutor = Executors.newVirtualThreadPerTaskExecutor()) {
-//            java.util.concurrent.Callable<ElementActions> futureAction = myExecutor.submit(action);
-//            actionsList.add(futureAction);
-//        }
-//    }
-
     public VirtualThreadingActions async(){
         return this;
     }
+
     public VirtualThreadingActions typeVirtual(By locator, String value) {
         addActionBuilder(() -> driver.element().type(locator, value));
         return this;
