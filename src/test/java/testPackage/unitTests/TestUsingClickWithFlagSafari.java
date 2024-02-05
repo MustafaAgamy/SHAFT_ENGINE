@@ -28,7 +28,7 @@ public class TestUsingClickWithFlagSafari {
                 .verifyProductAddedToCart("Added!")
                 .openCart()
                 .verifyCartPageIsLoaded()
-                .verifyProductAddedToCart("Blue Top");
+                .verifyProductExistsInCart("Blue Top");
     }
 
     @BeforeClass
@@ -109,7 +109,7 @@ public class TestUsingClickWithFlagSafari {
     }
 
     @Step("Validate on Product Added To Cart Page")
-    public TestUsingClickWithFlagSafari VerifyProductExistsInCart(String addedProductName){
+    public TestUsingClickWithFlagSafari verifyProductExistsInCart(String addedProductName){
         driver.assertThat().element(productName_h4).text().isEqualTo(addedProductName).perform();
         return this;
     }
