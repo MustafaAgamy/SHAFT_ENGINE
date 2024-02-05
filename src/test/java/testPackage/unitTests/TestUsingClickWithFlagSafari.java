@@ -31,6 +31,10 @@ public class TestUsingClickWithFlagSafari {
                 .verifyProductAddedToCart("Blue Top");
     }
 
+    @BeforeClass
+    public void setConfigurations(){
+        SHAFT.Properties.flags.set().clickUsingJavascriptWhenWebDriverClickFails(true);
+    }
     @BeforeMethod
     public void setUp(){
         driver = new SHAFT.GUI.WebDriver();
@@ -75,7 +79,7 @@ public class TestUsingClickWithFlagSafari {
 
     @Step("Open Cart Page")
     public TestUsingClickWithFlagSafari openCart(){
-        driver.element().clickUsingJavascript(viewCart_a);
+        driver.element().click(viewCart_a);
         return this;
     }
     //////////////////// Validations \\\\\\\\\\\\\\\\\\\\
