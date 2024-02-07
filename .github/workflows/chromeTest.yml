@@ -1,4 +1,4 @@
-name: "SafariTest"
+name: "ChromeTest"
 
 on:
   workflow_dispatch:
