@@ -1,4 +1,4 @@
-name: "SafariTest"
+name: "EdgeTest"
 
 on:
   workflow_dispatch:
@@ -8,8 +8,8 @@ on:
         default: ''
 
 jobs:
-  E2E_Safari_MacOS_Test:
-    runs-on: macos-latest
+  E2E_Edge_Windows_Test:
+    runs-on: windows-latest
     permissions:
       checks: write
     steps:
@@ -26,23 +26,23 @@ jobs:
           maven-version: 3.9.6
       - name: Run Tests
         continue-on-error: true
-        run: mvn test -DtargetBrowserName="safari" -DexecutionAddress="local" -DtargetOperatingSystem="MAC" -DwhenToTakePageSourceSnapshot="FailuresOnly" -DgenerateAllureReportArchive="true" -Dtest="${{ github.event.inputs.testsPath }}"
+        run: mvn test -DtargetBrowserName="microsoftedge" -DexecutionAddress="local" -DtargetOperatingSystem="WINDOWS" -DwhenToTakePageSourceSnapshot="FailuresOnly" -DgenerateAllureReportArchive="true" -Dtest="${{ github.event.inputs.testsPath }}"
       - name: Upload Allure Report as Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: Safari_MacOS_Allure
+          name: Edge_Windows_Allure
           path: "generatedReport_*.zip"
       - name: Upload Execution Summary Report as Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: Safari_MacOS_Summary
+          name: Edge_Windows_Summary
           path: "execution-summary/ExecutionSummaryReport_*.html"
       - name: Publish Report
         continue-on-error: true
         uses: dorny/test-reporter@v1
         if: success() || failure()
         with:
-          name: Tests Report Safari_MacOS
+          name: Tests Report Edge_Windows
           path: 'target/surefire-reports/TEST-*.xml'
           reporter: java-junit
       - name: Publish Test Results
@@ -50,6 +50,6 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action/composite@v2
         if: always()
         with:
-          check_name: "Tests Results Safari_MacOS"
+          check_name: "Tests Results Edge_Windows"
           files: |
             target/surefire-reports/TEST-*.xml
