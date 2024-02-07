@@ -5,13 +5,11 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class TestGoogleAds {
     private SHAFT.GUI.WebDriver driver;
-    private SHAFT.TestData.JSON testData;
     private final By products_link = By.cssSelector("a[href='/products']");
     private final By featuredItems_div = By.cssSelector("div.features_items");
     private final By recommendedItems_div = By.cssSelector("div.recommended_items");
@@ -35,12 +33,6 @@ public class TestGoogleAds {
                 .verifyProductDetailsPageVisibility()
                 .verifyProductDetails("Blue Top", "Women > Tops", "Rs. 500",
                         "In Stock", "New", "Polo");
-    }
-
-
-    @BeforeClass
-    public void beforeClass() {
-        testData = new SHAFT.TestData.JSON("ProductDetails.json");
     }
 
     @BeforeMethod
