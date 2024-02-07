@@ -4,6 +4,7 @@ import com.shaft.driver.SHAFT;
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -100,7 +101,7 @@ public class TestGoogleAds {
 
     /////////////////// Utilities \\\\\\\\\\\\\\\\\\\\
     public TestGoogleAds dismissAlert(SHAFT.GUI.WebDriver driver){
-        driver.element().doubleClick(By.tagName("header"));
+        new Actions(driver.getDriver()).pause(1500).doubleClick().perform();
         return this;
     }
 }
