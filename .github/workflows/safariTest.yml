@@ -26,7 +26,13 @@ jobs:
           maven-version: 3.9.6
       - name: Run Tests
         continue-on-error: true
-        run: mvn test -DtargetBrowserName="safari" -DsafariCapability="safari:useSimulator=true" -DexecutionAddress="local" -DtargetOperatingSystem="MAC" -DwhenToTakePageSourceSnapshot="FailuresOnly" -DgenerateAllureReportArchive="true" -Dtest="${{ github.event.inputs.testsPath }}"
+        run: |
+          defaults write com.apple.Safari IncludeInternalDebugMenu 1
+          defaults write com.apple.Safari IncludeDevelopMenu 1
+          defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey true
+          defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled -bool true
+          defaults write com.apple.Safari ShowWebKitDeveloperExtras -bool true
+          mvn test -DtargetBrowserName="safari" -DexecutionAddress="local" -DtargetOperatingSystem="MAC" -DwhenToTakePageSourceSnapshot="FailuresOnly" -DgenerateAllureReportArchive="true" -Dtest="${{ github.event.inputs.testsPath }}"
       - name: Upload Allure Report as Artifact
         uses: actions/upload-artifact@v3
         with:
