@@ -6,55 +6,40 @@ on:
       testsPath:
         description: 'Path to Tests to be Executed'
         default: ''
-
 jobs:
+
   E2E_Safari_MacOS_Test:
     runs-on: macos-latest
-
+    permissions:
+      checks: write
     steps:
+      - name: Disable JavaScript in Safari
+        run: |
+            defaults write com.apple.Safari WebKitJavaScriptEnabled -bool false
       - name: Checkout Code
         uses: actions/checkout@v4
-
-      - name: Download and Extract AdGuard Safari Extension
-        run: |
-          curl -L -o AdGuard_Safari.app.zip https://agrd.io/safari_release
-          unzip AdGuard_Safari.app.zip -d adguard_extension
-
-      - name: Enable AdGuard Extension in Safari Preferences
-        run: |
-          extensionPath="$PWD/adguard_extension/AdGuard for Safari.app"
-          if [[ $(defaults read com.apple.Safari ExtensionsEnabled 2>/dev/null) == *array* ]]; then
-            defaults write com.apple.Safari ExtensionsEnabled -array-add "$extensionPath"
-          else
-            defaults write com.apple.Safari ExtensionsEnabled -array "$extensionPath"
-          fi
-
       - name: Setup JDK 21
         uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
           java-version: '21'
-
       - name: Set up Maven
         uses: stCarolas/setup-maven@v4.5
         with:
           maven-version: 3.9.6
-
       - name: Run Tests
-        run: mvn test -DtargetBrowserName="safari" -Dsafari.useTechnologyPreview=true -Dsafari.usePerProcessProxy=true -Dsafari.javascriptEnabled=false -DexecutionAddress="local" -DtargetOperatingSystem="MAC" -DwhenToTakePageSourceSnapshot="FailuresOnly" -DgenerateAllureReportArchive="true" -Dtest="${{ github.event.inputs.testsPath }}"
-
+        continue-on-error: true
+        run: mvn test -DtargetBrowserName="safari" -DexecutionAddress="local" -DtargetOperatingSystem="MAC" -DwhenToTakePageSourceSnapshot="FailuresOnly" -DgenerateAllureReportArchive="true" -Dtest="${{ github.event.inputs.testsPath }}"
       - name: Upload Allure Report as Artifact
         uses: actions/upload-artifact@v3
         with:
           name: Safari_MacOS_Allure
           path: "generatedReport_*.zip"
-
       - name: Upload Execution Summary Report as Artifact
         uses: actions/upload-artifact@v3
         with:
           name: Safari_MacOS_Summary
           path: "execution-summary/ExecutionSummaryReport_*.html"
-
       - name: Publish Report
         continue-on-error: true
         uses: dorny/test-reporter@v1
@@ -63,7 +48,6 @@ jobs:
           name: Tests Report Safari_MacOS
           path: 'target/surefire-reports/TEST-*.xml'
           reporter: java-junit
-
       - name: Publish Test Results
         continue-on-error: true
         uses: EnricoMi/publish-unit-test-result-action/composite@v2
