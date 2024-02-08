@@ -101,7 +101,7 @@ public class TestGoogleAds {
 
     /////////////////// Utilities \\\\\\\\\\\\\\\\\\\\
     public TestGoogleAds dismissAlert(SHAFT.GUI.WebDriver driver){
-        new Actions(driver.getDriver()).doubleClick(driver.getDriver().findElement(By.tagName("header"))).perform();
+        new Actions(driver.getDriver()).doubleClick().perform();
         return this;
     }
 }
