@@ -41,7 +41,7 @@ jobs:
           maven-version: 3.9.6
 
       - name: Run Tests
-        run: mvn test -DtargetBrowserName="safari" -DexecutionAddress="local" -DtargetOperatingSystem="MAC" -DwhenToTakePageSourceSnapshot="FailuresOnly" -DgenerateAllureReportArchive="true" -Dtest="${{ github.event.inputs.testsPath }}"
+        run: mvn test -DtargetBrowserName="safari" -Dsafari.useTechnologyPreview=true -Dsafari.usePerProcessProxy=true -Dsafari.javascriptEnabled=false -DexecutionAddress="local" -DtargetOperatingSystem="MAC" -DwhenToTakePageSourceSnapshot="FailuresOnly" -DgenerateAllureReportArchive="true" -Dtest="${{ github.event.inputs.testsPath }}"
 
       - name: Upload Allure Report as Artifact
         uses: actions/upload-artifact@v3
