@@ -55,6 +55,15 @@ jobs:
           name: Safari_MacOS_Summary
           path: "execution-summary/ExecutionSummaryReport_*.html"
 
+      - name: Publish Report
+        continue-on-error: true
+        uses: dorny/test-reporter@v1
+        if: success() || failure()
+        with:
+          name: Tests Report Safari_MacOS
+          path: 'target/surefire-reports/TEST-*.xml'
+          reporter: java-junit
+
       - name: Publish Test Results
         continue-on-error: true
         uses: EnricoMi/publish-unit-test-result-action/composite@v2
