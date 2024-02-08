@@ -13,6 +13,9 @@ jobs:
     permissions:
       checks: write
     steps:
+      - name: Disable JavaScript in Safari
+        run: |
+            osascript -e 'tell application "Safari" to set allowsContentJavaScript to false'
       - name: Checkout Code
         uses: actions/checkout@v4
       - name: Setup JDK 21
