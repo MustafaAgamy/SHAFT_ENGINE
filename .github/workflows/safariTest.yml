@@ -19,12 +19,17 @@ jobs:
           unzip AdGuard_Safari.app.zip -d adguard_extension
           open adguard_extension/AdGuard\ for\ Safari.app
           sleep 10 # Wait for extension to be installed
-      - name: Check Extension Installation
-        if: success()
-        run: echo "AdGuard Safari extension installed successfully."
-      - name: Check Extension Installation Status
-        if: failure()
-        run: echo "AdGuard Safari extension installation failed."
+      - name: Enable AdGuard Extension in Safari Preferences
+        run: |
+          extensionPath="$PWD/adguard_extension/AdGuard for Safari.app"
+          defaults write com.apple.Safari ExtensionsEnabled -array-add "$extensionPath"
+          killall Safari
+          - name: Check Extension Installation
+            if: success()
+            run: echo "AdGuard Safari extension installed successfully."
+          - name: Check Extension Installation Status
+            if: failure()
+            run: echo "AdGuard Safari extension installation failed."
 
   E2E_Safari_MacOS_Test:
     runs-on: macos-latest
