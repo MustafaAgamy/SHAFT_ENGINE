@@ -31,7 +31,7 @@ jobs:
         continue-on-error: true
         run: |
           defaults write com.apple.Safari WebKitJavaScriptEnabled -bool false
-          mvn test -DtargetBrowserName="safari" -DexecutionAddress="local" -DtargetOperatingSystem="MAC" -DwhenToTakePageSourceSnapshot="FailuresOnly" -DgenerateAllureReportArchive="true" -Dtest="${{ github.event.inputs.testsPath }}"
+          mvn test -DtargetBrowserName="safari" -DexecutionAddress="local" -Dsafari.javascriptEnabled=false -DtargetOperatingSystem="MAC" -DwhenToTakePageSourceSnapshot="FailuresOnly" -DgenerateAllureReportArchive="true" -Dtest="${{ github.event.inputs.testsPath }}"
       - name: Upload Allure Report as Artifact
         uses: actions/upload-artifact@v3
         with:
