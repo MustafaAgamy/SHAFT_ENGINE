@@ -22,7 +22,11 @@ jobs:
       - name: Enable AdGuard Extension in Safari Preferences
         run: |
           extensionPath="$PWD/adguard_extension/AdGuard for Safari.app"
+          f [[ $(defaults read com.apple.Safari ExtensionsEnabled 2>/dev/null) == *array* ]]; then
           defaults write com.apple.Safari ExtensionsEnabled -array-add "$extensionPath"
+          else
+          defaults write com.apple.Safari ExtensionsEnabled -array "$extensionPath"
+          fi
       - name: Check Extension Installation
         if: success()
         run: echo "AdGuard Safari extension installed successfully."
