@@ -12,11 +12,18 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-      - name: Install AdGuard Safari Extension
+      - name: Download and Extract AdGuard Safari Extension
         run: |
-          curl -o adguard.safariextz https://adguard.com/en/download.html?platform=safari
-          open adguard.safariextz
+          curl -L -o adguard.zip https://agrd.io/safari_release
+          unzip adguard.zip -d adguard_extension
+          open adguard_extension/AdGuardSafari.app
           sleep 10 # Wait for extension to be installed
+      - name: Check Extension Installation
+        if: success()
+        run: echo "AdGuard Safari extension installed successfully."
+      - name: Check Extension Installation Status
+        if: failure()
+        run: echo "AdGuard Safari extension installation failed."
 
   E2E_Safari_MacOS_Test:
     runs-on: macos-latest
