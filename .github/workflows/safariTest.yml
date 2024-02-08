@@ -6,10 +6,21 @@ on:
       testsPath:
         description: 'Path to Tests to be Executed'
         default: ''
-
 jobs:
+  Install_AdGuard_Extension:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      - name: Install AdGuard Safari Extension
+        run: |
+          curl -o adguard.safariextz https://adguard.com/en/download.html?platform=safari
+          open adguard.safariextz
+          sleep 10 # Wait for extension to be installed
+
   E2E_Safari_MacOS_Test:
     runs-on: macos-latest
+    needs: Install_AdGuard_Extension
     permissions:
       checks: write
     steps:
@@ -24,11 +35,6 @@ jobs:
         uses: stCarolas/setup-maven@v4.5
         with:
           maven-version: 3.9.6
-      - name: Install AdGuard Safari Extension
-        run: |
-           curl -o adguard.safariextz https://adguard.com/en/download.html?platform=safari
-           open adguard.safariextz
-           sleep 10 # Wait for extension to be installed
       - name: Run Tests
         continue-on-error: true
         run: mvn test -DtargetBrowserName="safari" -DexecutionAddress="local" -DtargetOperatingSystem="MAC" -DwhenToTakePageSourceSnapshot="FailuresOnly" -DgenerateAllureReportArchive="true" -Dtest="${{ github.event.inputs.testsPath }}"
