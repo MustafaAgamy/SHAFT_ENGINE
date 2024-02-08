@@ -16,7 +16,7 @@ jobs:
         run: |
           curl -L -o adguard.zip https://agrd.io/safari_release
           mkdir adguard_extension
-          unzip adguard.zip -d adguard_extension
+          unzip AdGuard_Safari.app.zip -d adguard_extension
           open adguard_extension/AdGuard for Safari.app
           sleep 10 # Wait for extension to be installed
       - name: Check Extension Installation
