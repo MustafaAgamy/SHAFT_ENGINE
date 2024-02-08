@@ -13,9 +13,6 @@ jobs:
     permissions:
       checks: write
     steps:
-      - name: Disable JavaScript in Safari
-        run: |
-            defaults write com.apple.Safari WebKitJavaScriptEnabled -bool false
       - name: Checkout Code
         uses: actions/checkout@v4
       - name: Setup JDK 21
@@ -29,7 +26,9 @@ jobs:
           maven-version: 3.9.6
       - name: Run Tests
         continue-on-error: true
-        run: mvn test -DtargetBrowserName="safari" -DexecutionAddress="local" -DtargetOperatingSystem="MAC" -DwhenToTakePageSourceSnapshot="FailuresOnly" -DgenerateAllureReportArchive="true" -Dtest="${{ github.event.inputs.testsPath }}"
+        run: |
+          defaults write com.apple.Safari WebKitJavaScriptEnabled -bool false
+          mvn test -DtargetBrowserName="safari" -DexecutionAddress="local" -DtargetOperatingSystem="MAC" -DwhenToTakePageSourceSnapshot="FailuresOnly" -DgenerateAllureReportArchive="true" -Dtest="${{ github.event.inputs.testsPath }}"
       - name: Upload Allure Report as Artifact
         uses: actions/upload-artifact@v3
         with:
