@@ -23,6 +23,7 @@ public class TestGoogleAds {
     private final By productCondition_p = By.xpath("//div[@class='col-sm-7']//p[3]");
     private final By productBrand_p = By.xpath("//div[@class='col-sm-7']//p[4]");
     private final By productPrice_span = By.xpath("//div[@class='col-sm-7']//span//span");
+    private static final By headerElement_header = By.tagName("header");
 
 
     @Test(description = "Verify The Product and the Details on ProductDetails Page")
@@ -101,7 +102,8 @@ public class TestGoogleAds {
 
     /////////////////// Utilities \\\\\\\\\\\\\\\\\\\\
     public TestGoogleAds dismissAlert(SHAFT.GUI.WebDriver driver){
-        new Actions(driver.getDriver()).doubleClick().perform();
+        driver.element().doubleClick(headerElement_header);
+//        new Actions(driver.getDriver()).doubleClick().perform();
         return this;
     }
 }
