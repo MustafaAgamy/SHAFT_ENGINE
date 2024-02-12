@@ -40,6 +40,7 @@ public class TestGoogleAds {
     @BeforeMethod
     public void beforeMethod() {
         driver = new SHAFT.GUI.WebDriver();
+        driver.browser().maximizeWindow();
                 navigate()
                 .validateOnVisibilityOfHomePage();
     }
