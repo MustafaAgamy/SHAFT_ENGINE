@@ -78,14 +78,8 @@ public class SignupPage {
 
     @Step("Click on Continue Button")
     public SignupPage clickOnContinueButton() {
-
-//        TestGoogleAds.disableJS(driver);
-//        driver.element().click(continueBtn_link);
         driver.element().click(continueBtn_link);
         GoogleAds.handleGoogleAd(driver, continueBtn_link);
-//        TestGoogleAds.dismissAlert(driver);
-//        new Actions(driver.getDriver()).pause(1000).doubleClick().perform();
-
         return this;
     }
 

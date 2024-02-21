@@ -12,8 +12,8 @@ public class GoogleAds {
         try {
             driver.element().click(locator);
 
-        } catch (NoSuchElementException | TimeoutException e){
-            //empty (Expected to be caught in case if the add didn't get triggered)
+        } catch (Exception e){
+            //empty (Expected to be caught in case if the Ad didn't get triggered)
         }
 
         return new GoogleAds();

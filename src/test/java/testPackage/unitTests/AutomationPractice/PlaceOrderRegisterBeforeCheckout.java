@@ -36,17 +36,6 @@ public class PlaceOrderRegisterBeforeCheckout {
     private  String timeStamp = String.valueOf(System.currentTimeMillis());
     @BeforeMethod
     public void beforeMethod() {
-//        FirefoxProfile profile = new FirefoxProfile();
-//        profile.addExtension(new File("E:\\Intelliji\\SHAFT_ENGINE_FORK\\src\\test\\resources\\adblockultimate@adblockultimate.net.xpi"));
-//        profile.setPreference("extensions.adblockultimate.currentVersion", "3.8.21"); // Replace "x.x.x" with the version number
-//        profile.setPreference("extensions.adblockultimate.enabled", true);
-//        profile.setPreference("xpinstall.signatures.required", false);
-//        FirefoxOptions options = new FirefoxOptions();
-//        options.setProfile(profile);
-//        firefoxOptions.setProfile(new FirefoxProfile(new File("C:\\Users\\mostafa.agamy\\AppData\\Roaming\\Mozilla\\Firefox\\Profiles\\rwatp913.default-release")));
-//        enableJSOption.addPreference("javascript.enabled", false);
-//        enableJSOption.addPreference("javascript.enabled", true);
-
         driver = new SHAFT.GUI.WebDriver(DriverFactory.DriverType.EDGE);
         new HomePage(driver)
                 .navigate()
