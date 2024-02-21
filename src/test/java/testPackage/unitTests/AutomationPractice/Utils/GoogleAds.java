@@ -12,7 +12,7 @@ public class GoogleAds {
         try {
             driver.element().click(locator);
 
-        } catch (Exception e){
+        } catch (Throwable e){
             //empty (Expected to be caught in case if the Ad didn't get triggered)
         }
 
