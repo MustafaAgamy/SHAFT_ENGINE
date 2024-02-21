@@ -1,13 +1,16 @@
 package testPackage.unitTests;
 
+import com.shaft.driver.DriverFactory;
 import com.shaft.driver.SHAFT;
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import testPackage.unitTests.AutomationPractice.Utils.GoogleAds;
 
 public class TestGoogleAds {
     private SHAFT.GUI.WebDriver driver;
@@ -39,7 +42,8 @@ public class TestGoogleAds {
 
     @BeforeMethod
     public void beforeMethod() {
-        driver = new SHAFT.GUI.WebDriver();
+        SHAFT.Properties.flags.set().clickUsingJavascriptWhenWebDriverClickFails(true);
+        driver = new SHAFT.GUI.WebDriver(DriverFactory.DriverType.FIREFOX);
         driver.browser().maximizeWindow();
                 navigate()
                 .validateOnVisibilityOfHomePage();
@@ -60,13 +64,13 @@ public class TestGoogleAds {
     @Step("Click on Products Page Link")
     public TestGoogleAds clickOnProductsLink() {
         driver.element().clickUsingJavascript(products_link);
-        dismissAlert(driver);
+        GoogleAds.handleGoogleAd(driver, products_link);
         return this;
     }
     @Step("Pick Product")
     public TestGoogleAds pickProduct(String productName){
         driver.element().click(viewProduct_link(productName));
-        dismissAlert(driver);
+        GoogleAds.handleGoogleAd(driver, viewProduct_link(productName));
         return this;
     }
     /////////////////// Validations \\\\\\\\\\\\\\\\\\\\
@@ -102,9 +106,21 @@ public class TestGoogleAds {
     }
 
     /////////////////// Utilities \\\\\\\\\\\\\\\\\\\\
-    public TestGoogleAds dismissAlert(SHAFT.GUI.WebDriver driver){
+    public static TestGoogleAds disableJS(SHAFT.GUI.WebDriver driver){
+        FirefoxOptions disableJSOption = new FirefoxOptions();
+        disableJSOption.addPreference("javascript.enabled", false);
+        driver.browser().refreshCurrentPage();
+        return new TestGoogleAds();
+    }
+    public static TestGoogleAds enableJS(SHAFT.GUI.WebDriver driver){
+        FirefoxOptions disableJSOption = new FirefoxOptions();
+        disableJSOption.addPreference("javascript.enabled", true);
+        driver.browser().refreshCurrentPage();
+        return new TestGoogleAds();
+    }
+    public static TestGoogleAds dismissAlert(SHAFT.GUI.WebDriver driver){
         driver.element().doubleClick(headerElement_header);
 //        new Actions(driver.getDriver()).doubleClick().perform();
-        return this;
+        return new TestGoogleAds();
     }
 }
